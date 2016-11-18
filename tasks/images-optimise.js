@@ -15,7 +15,7 @@ module.exports = taskModule;
 function taskModule (gulp, browserSync, config) {
     var task = function () {
         return gulp.src([
-                config.paths.source.images + '**/*.+(png|PNG|jpg|JPG|jpeg|JPEG|gif|GIF|svg|SVG)',
+                config.paths.source.images + '**/*.+(png|PNG|jpg|JPG|jpeg|JPEG|gif|GIF|svg|SVG|ico|ICO)',
                 config.paths.build.sprite + '**/*.png',
                 '!' + config.paths.source.sprite + '**'
             ])
