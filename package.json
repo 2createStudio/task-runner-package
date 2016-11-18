@@ -1,6 +1,6 @@
 {
   "name": "2create-task-runner-package",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "2create task runner package",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/htmlburger-git/2create-task-runner-package.git"
+    "url": "git+https://github.com/2createStudio/task-runner-package.git"
   },
   "keywords": [
     "task",
@@ -17,9 +17,9 @@
   "author": "2create",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/htmlburger-git/2create-task-runner-package/issues"
+    "url": "https://github.com/2createStudio/task-runner-package/issues"
   },
-  "homepage": "https://github.com/htmlburger-git/2create-task-runner-package#readme",
+  "homepage": "https://github.com/2createStudio/task-runner-package#readme",
   "dependencies": {
     "autoprefixer": "~6.5.2",
     "browser-sync": "^2.17.5",

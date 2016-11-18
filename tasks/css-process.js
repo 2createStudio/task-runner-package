@@ -131,7 +131,7 @@ function taskModule (gulp, browserSync, config) {
         // Extend
         postcssProcessors.push(postcssExtend);
 
-        // Varialbes
+        // Variables
         postcssProcessors.push(postcssSimpleVars);
 
         // Reduces calcs, where possible

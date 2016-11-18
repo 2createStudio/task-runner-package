@@ -33,14 +33,10 @@ module.exports = function (opts) {
         });
         
         for (var i = 0; i < packageNames.length; i++) {
-            request({
-                url: opts.base + packageNames[i] + '/main.css'
-            }, function(error, response, body) {
-                packagesGot += 1;
+            getPackage(packageNames[i], function(body) {
+                contents += body;
 
-                if (!error) {
-                    contents += body;
-                }
+                packagesGot += 1;
 
                 if (packagesGot === packageNames.length) {
                     cb()
@@ -52,8 +48,23 @@ module.exports = function (opts) {
 
         if (!packageNames.length) {
             cb();
-        }
-        
+        }   
+    }
+
+    function getPackage(packageName, cb) {
+        request({
+            url: opts.base + packageName + '/main.css'
+        }, function(error, response, body) {
+            if (response.statusCode !== 200) {
+                cb('/* Module "' + packageName + '" not found. */\n\n');
+            } else {
+                if (!error) {
+                    cb(body + '\n');
+                } else {
+                    cb('');
+                }
+            }
+        });
     }
 
     function endStream(cb) {

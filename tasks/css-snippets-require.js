@@ -21,7 +21,7 @@ function taskModule (gulp, browserSync, config) {
             })
             .pipe(cssSnippets({
                 fileName: config.fileNames.snippet.components,
-                base: 'https://rawgit.com/htmlburger-git/postcss-require-lib/master/snippets/',
+                base: config.cssSnippets.requireUrl
             }))
             .pipe(gulp.dest(config.paths.snippet.outputDir));
     };
