@@ -6,8 +6,8 @@ var taskDescription = 'Livereload, and notifications.';
 
 // Task dependencies
 var path            = require('path');
-var utils           = require('./../helper-utils');
-var connectPixelParallel = require('./../helper-connect-pixelparallel.js');
+var utils           = require('./../helper/utils');
+var connectPixelParallel = require('./../helper/connect-pixelparallel.js');
 
 // Export the task module
 module.exports = taskModule;

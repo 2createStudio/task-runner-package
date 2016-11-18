@@ -28,7 +28,7 @@ module.exports = function (opts) {
 
         var packagesGot = 0;
 
-        var packageNames = file.contents.toString().match(/^include\('(.*?)'\)?;\s*$/gm).map(function(item) {
+        var packageNames = (file.contents.toString().match(/^include\('(.*?)'\)?;\s*$/gm) || []).map(function(item) {
             return item.match(/^include\('(.*?)'\)?;\s*$/)[1];
         });
         
@@ -49,6 +49,10 @@ module.exports = function (opts) {
         }
 
         originalFile = file;
+
+        if (!packageNames.length) {
+            cb();
+        }
         
     }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('./helper-utils');
+var utils = require('./utils');
 
 module.exports = helper;
 

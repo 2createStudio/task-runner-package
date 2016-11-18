@@ -3,7 +3,7 @@
 module.exports = main;
 
 function main(gulp, browserSync, baseConfig) {
-    var config = require('./helper-args-config')(baseConfig);
+    var config = require('./helper/args-config')(baseConfig);
 
     // Collect multi-used tasks
     var cssProcessTask = getTask('css-process');
@@ -100,7 +100,7 @@ function main(gulp, browserSync, baseConfig) {
         ]).on('change', gulp.series(getTask('html-cleanup'), htmlIncludeTask, browserSync.reload));
 
 
-        gulp.watch([config.paths.source.css + '_mixin-requires.css'], gulp.series(getTask('css-snippets-require')));
+        gulp.watch([config.paths.snippet.dir + config.fileNames.snippet.requires], gulp.series(getTask('css-snippets-require')));
 
         cb();
     }

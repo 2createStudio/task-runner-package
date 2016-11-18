@@ -5,7 +5,7 @@ var taskName            = 'CSS: Proccess';
 var taskDescription     = 'Compiles the CSS.';
 
 // Task dependencies
-var utils               = require('./../helper-utils');
+var utils               = require('./../helper/utils');
 
 var gulpCssModulesConcat = require('./../plugins/gulp-css-modules-concat');
 var postcssTOC          = require('./../plugins/postcss-toc');
