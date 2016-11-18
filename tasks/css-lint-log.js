@@ -15,7 +15,8 @@ module.exports = taskModule;
 function taskModule (gulp, browserSync, config) {
     var task = function () {
         return gulp.src([
-                config.paths.source.css + '*.css'
+                config.paths.source.css + '*.css',
+                '!' + config.paths.snippet.dir + config.fileNames.snippet.requires
             ])
             .pipe(postcss([
                 stylelint,
