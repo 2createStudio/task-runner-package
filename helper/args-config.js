@@ -9,11 +9,11 @@ function helper(config) {
 
     var newConfig = JSON.parse(JSON.stringify(config));
 
-    if (utils.getEnvVar('dev-url')) {
+    if (utils.getEnvVar('dev-url') !== null) {
         newConfig.browserSync.url = utils.getEnvVar('dev-url');
     }
 
-    if (utils.getEnvVar('dev-open')) {
+    if (utils.getEnvVar('dev-open') !== null) {
         newConfig.browserSync.open = utils.getEnvVar('dev-open');
     }
 

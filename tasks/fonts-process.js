@@ -1,8 +1,8 @@
 'use strict';
 
 // Task name and description
-var taskName        = 'JS: Process';
-var taskDescription = 'Compiles the JS.';
+var taskName        = 'Fonts: Process';
+var taskDescription = 'Process the fonts into the working directory.';
 
 // Task dependencies
 var copy            = require('gulp-copy');
@@ -12,19 +12,20 @@ module.exports = taskModule;
 
 // Task module
 function taskModule (gulp, browserSync, config) {
+
     var task = function () {
-        var dest = config.paths.dist.js;
+        var dest = config.paths.dist.fonts;
 
         if (config.building) {
-            dest = config.paths.build.js;
+            dest = config.paths.build.fonts;
         }
 
         if (config.minifying) {
-            dest = config.paths.min.js;
+            dest = config.paths.min.fonts;
         }
 
         return gulp.src([
-                config.paths.source.js + '**/*',
+                config.paths.source.fonts + '**/*'
             ])
             .pipe(copy(dest, {
                 prefix: 3

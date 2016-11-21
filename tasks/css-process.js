@@ -1,32 +1,32 @@
 'use strict';
 
 // Task name and description
-var taskName            = 'CSS: Proccess';
-var taskDescription     = 'Compiles the CSS.';
+var taskName                 = 'CSS: Proccess';
+var taskDescription          = 'Compiles the CSS.';
 
 // Task dependencies
-var utils               = require('./../helper/utils');
+var utils                    = require('./../helper/utils');
 
-var gulpCssModulesConcat = require('./../plugins/gulp-css-modules-concat');
-var postcssTOC          = require('./../plugins/postcss-toc');
+var gulpCssModulesConcat     = require('./../plugins/gulp-css-modules-concat');
+var postcssTOC               = require('./../plugins/postcss-toc');
 var postcssDiscardEmptyFiles = require('./../plugins/postcss-discard-empty-files');
 
-var postcssAPI          = require('postcss');
-var postcss             = require('gulp-postcss');
-var postcssSimpleVars   = require('postcss-simple-vars');
-var postcssCalc         = require('postcss-calc');
-var postcssColor        = require('postcss-color-function');
-var postcssMixins       = require('postcss-mixins');
-var postcssExtend       = require('postcss-simple-extend');
-var postcssBadSelectors = require('postcss-bad-selectors');
-var postcssSprites      = require('postcss-sprites');
-var postcssDiscardEmpty = require('postcss-discard-empty');
-var postcssNesting      = require('postcss-nesting');
-var sourcemaps          = require('gulp-sourcemaps');
-var autoprefixer        = require('autoprefixer')
-var cssbeautify         = require('gulp-cssbeautify');
-var cleanCSS            = require('gulp-clean-css');
-var gulpif              = require('gulp-if');
+var postcssAPI               = require('postcss');
+var postcss                  = require('gulp-postcss');
+var postcssSimpleVars        = require('postcss-simple-vars');
+var postcssCalc              = require('postcss-calc');
+var postcssColor             = require('postcss-color-function');
+var postcssMixins            = require('postcss-mixins');
+var postcssExtend            = require('postcss-simple-extend');
+var postcssBadSelectors      = require('postcss-bad-selectors');
+var postcssSprites           = require('postcss-sprites');
+var postcssDiscardEmpty      = require('postcss-discard-empty');
+var postcssNesting           = require('postcss-nesting');
+var sourcemaps               = require('gulp-sourcemaps');
+var autoprefixer             = require('autoprefixer')
+var cssbeautify              = require('gulp-cssbeautify');
+var cleanCSS                 = require('gulp-clean-css');
+var gulpif                   = require('gulp-if');
 
 // Export the task module
 module.exports = taskModule;
@@ -120,6 +120,11 @@ function taskModule (gulp, browserSync, config) {
         if (config.building) {
             dest = config.paths.build.css;
             destFileName = config.fileNames.build.css
+        }
+
+        if (config.minifying) {
+            dest = config.paths.min.css;
+            destFileName = config.fileNames.min.css
         }
 
         // PostCSS processors

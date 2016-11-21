@@ -1,6 +1,6 @@
 {
   "name": "2create-task-runner-package",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "2create task runner package",
   "main": "index.js",
   "scripts": {
@@ -54,5 +54,10 @@
     "stylelint": "^7.4.2",
     "through2": "^2.0.1",
     "yargs": "^6.3.0"
+  },
+  "devDependencies": {
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-inline-source": "^3.0.0",
+    "gulp-strip-comments": "^2.4.3"
   }
 }

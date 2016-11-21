@@ -10,12 +10,14 @@ function main(gulp, browserSync, baseConfig) {
     var imagesSpriteRetinaResize = getTask('images-sprite-retina-resize');
     var lazyRulesTask = getTask('lazy-sprite-rules');
     var jsProcessTask = getTask('js-process');
-    var htmlIncludeTask = getTask('html-include');
+    var htmlProcessTask = getTask('html-process');
     var imagesCopyTask = getTask('images-copy');
     var userIncludesGetTask = getTask('user-includes-get');
     var userIncludesCleanupTask = getTask('user-includes-cleanup');
+    var componentsProcessTask = getTask('components-process');
     var userIncludesCopyTask = getTask('user-includes-copy');
-    var fontsCopyTask = getTask('fonts-copy');
+    var fontsProcessTask = getTask('fonts-process');
+    var imagesOptimise = getTask('images-optimise');
 
     // Create serve tasks collection
     var serveTasks = gulp.series(
@@ -24,13 +26,32 @@ function main(gulp, browserSync, baseConfig) {
         lazyRulesTask,
         cssProcessTask,
         jsProcessTask,
-        htmlIncludeTask,
+        htmlProcessTask,
         imagesCopyTask,
-        fontsCopyTask,
+        fontsProcessTask,
+        componentsProcessTask,
         userIncludesGetTask,
         userIncludesCopyTask,
         getTask('browsersync'),
         watchTask
+    );
+
+    var minTasks = gulp.series(
+        function(cb) {
+            config.minifying = true;
+            config.settings.css.minify = true;
+
+            cb();
+        },
+        getTask('min-cleanup'),
+        cssProcessTask,
+        jsProcessTask,
+        htmlProcessTask,
+        imagesOptimise,
+        fontsProcessTask,
+        componentsProcessTask,
+        userIncludesGetTask,
+        userIncludesCopyTask
     );
 
     // Create build tasks collection
@@ -48,11 +69,13 @@ function main(gulp, browserSync, baseConfig) {
         cssProcessTask,
         getTask('css-lint-cleanup'),
         getTask('css-lint-save'),
-        htmlIncludeTask,
-        getTask('images-optimise'),
-        fontsCopyTask,
+        htmlProcessTask,
+        imagesOptimise,
+        fontsProcessTask,
+        componentsProcessTask,
         userIncludesGetTask,
-        userIncludesCopyTask
+        userIncludesCopyTask,
+        minTasks
     );
 
     var developmentTasks = gulp.parallel(
@@ -86,8 +109,11 @@ function main(gulp, browserSync, baseConfig) {
         // JS watch
         gulp.watch([config.paths.source.js + '*.js'], gulp.series(getTask('js-cleanup'), jsProcessTask, browserSync.reload));
 
+        // Components watch
+        gulp.watch([config.paths.source.components + '*/**'], gulp.series(getTask('components-cleanup'), componentsProcessTask, browserSync.reload));
+
         // Fonts watch
-        gulp.watch([config.paths.source.fonts + '*/**'], gulp.series(getTask('fonts-cleanup'), fontsCopyTask, browserSync.reload));
+        gulp.watch([config.paths.source.fonts + '*/**'], gulp.series(getTask('fonts-cleanup'), fontsProcessTask, browserSync.reload));
 
         // User Includes watch
         gulp.watch([config.paths.userIncludes.dir + config.fileNames.userIncludes.requires], gulp.series(userIncludesCleanupTask, userIncludesGetTask, userIncludesCopyTask));
@@ -97,7 +123,7 @@ function main(gulp, browserSync, baseConfig) {
             config.paths.source.html + '**/*.html',
             config.paths.source.html + '**/*.shtml',
             config.paths.source.html + '**/*.php'
-        ]).on('change', gulp.series(getTask('html-cleanup'), htmlIncludeTask, browserSync.reload));
+        ]).on('change', gulp.series(getTask('html-cleanup'), htmlProcessTask, browserSync.reload));
 
 
         gulp.watch([config.paths.snippet.dir + config.fileNames.snippet.requires], gulp.series(getTask('css-snippets-require')));

@@ -19,6 +19,10 @@ function taskModule (gulp, browserSync, config) {
             dest = config.paths.build.dir;
         }
 
+        if (config.minifying) {
+            dest = config.paths.min.dir;
+        }
+
         var src = [];
 
         for (var i = 0; i < config.settings.userIncludes.paths.length; i++) {

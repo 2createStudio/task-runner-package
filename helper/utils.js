@@ -25,7 +25,7 @@ function getEnvVar(variable) {
         return envVars[variable];
     }
 
-    return false;
+    return null;
 }
 
 /**
