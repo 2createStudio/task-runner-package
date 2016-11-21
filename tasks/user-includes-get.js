@@ -32,6 +32,23 @@ function taskModule (gulp, browserSync, config) {
                 }
             }
 
+            if (config.settings.userIncludes.watcher) {
+                if (!('watcherPaths' in config.settings.userIncludes)) {
+                    config.settings.userIncludes.watcherPaths = [];
+                }
+
+                // Configure watch
+                for (var i = 0; i < result.length; i++) {
+                    if (config.settings.userIncludes.watcherPaths.indexOf(result[i]) > -1) {
+                        continue;
+                    }
+
+                    config.settings.userIncludes.watcherPaths.push(result[i]);
+                    config.settings.userIncludes.watcher.add(config.paths.source.dir + result[i]);
+
+                }
+            }
+
             config.settings.userIncludes.paths = result;
 
             cb();

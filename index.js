@@ -33,7 +33,8 @@ function main(gulp, browserSync, baseConfig) {
         userIncludesGetTask,
         userIncludesCopyTask,
         getTask('browsersync'),
-        watchTask
+        watchTask,
+        userIncludesGetTask
     );
 
     var minTasks = gulp.series(
@@ -95,38 +96,62 @@ function main(gulp, browserSync, baseConfig) {
 
     function watchTask(cb) {
         // Images sprite resize
-        gulp.watch([config.paths.source.sprite + '*@2x.png'], imagesSpriteRetinaResize);
+        gulp
+            .watch([config.paths.source.sprite + '*@2x.png'])
+            .on('all', imagesSpriteRetinaResize);
 
         // Lazy rules watch
-        gulp.watch([config.paths.source.sprite + '*.png', '!' + config.paths.source.sprite + '*@2x.png'], lazyRulesTask);
+        gulp
+            .watch([config.paths.source.sprite + '*.png', '!' + config.paths.source.sprite + '*@2x.png'])
+            .on('all', lazyRulesTask);
 
         // Images watch
-        gulp.watch([config.paths.source.images + '**'], gulp.series(getTask('images-cleanup'), imagesCopyTask));
+        gulp
+            .watch([config.paths.source.images + '**/*'])
+            .on('all', gulp.series(getTask('images-cleanup'), imagesCopyTask));
 
         // CSS watch
-        gulp.watch([config.paths.source.css + '_*.css'], cssProcessTask);
+        gulp
+            .watch([config.paths.source.css + '_*.css'])
+            .on('all', cssProcessTask);
 
         // JS watch
-        gulp.watch([config.paths.source.js + '*.js'], gulp.series(getTask('js-cleanup'), jsProcessTask, browserSync.reload));
+        gulp
+            .watch([config.paths.source.js + '*.js'])
+            .on('all', gulp.series(getTask('js-cleanup'), jsProcessTask, browserSync.reload));
 
         // Components watch
-        gulp.watch([config.paths.source.components + '*/**'], gulp.series(getTask('components-cleanup'), componentsProcessTask, browserSync.reload));
+        gulp
+            .watch([config.paths.source.components + '**/*'])
+            .on('all', gulp.series(getTask('components-cleanup'), componentsProcessTask, browserSync.reload));
 
         // Fonts watch
-        gulp.watch([config.paths.source.fonts + '*/**'], gulp.series(getTask('fonts-cleanup'), fontsProcessTask, browserSync.reload));
+        gulp
+            .watch([config.paths.source.fonts + '**/*'])
+            .on('all', gulp.series(getTask('fonts-cleanup'), fontsProcessTask, browserSync.reload));
 
         // User Includes watch
-        gulp.watch([config.paths.userIncludes.dir + config.fileNames.userIncludes.requires], gulp.series(userIncludesCleanupTask, userIncludesGetTask, userIncludesCopyTask));
+        gulp
+            .watch([config.paths.userIncludes.dir + config.fileNames.userIncludes.requires])
+            .on('change', gulp.series(userIncludesCleanupTask, userIncludesGetTask, userIncludesCopyTask));
 
         // HTML watch
-        gulp.watch([
-            config.paths.source.html + '**/*.html',
-            config.paths.source.html + '**/*.shtml',
-            config.paths.source.html + '**/*.php'
-        ]).on('change', gulp.series(getTask('html-cleanup'), htmlProcessTask, browserSync.reload));
+        gulp
+            .watch([
+                config.paths.source.html + '**/*.html',
+                config.paths.source.html + '**/*.shtml',
+                config.paths.source.html + '**/*.php'
+            ])
+            .on('all', gulp.series(getTask('html-cleanup'), htmlProcessTask, browserSync.reload));
 
+        // CSS Snippets require watch
+        gulp
+            .watch([config.paths.snippet.dir + config.fileNames.snippet.requires])
+            .on('change', getTask('css-snippets-require'));
 
-        gulp.watch([config.paths.snippet.dir + config.fileNames.snippet.requires], gulp.series(getTask('css-snippets-require')));
+        config.settings.userIncludes.watcher = gulp
+            .watch()
+            .on('all', gulp.series(userIncludesCleanupTask, userIncludesCopyTask));
 
         cb();
     }
