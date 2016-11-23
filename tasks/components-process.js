@@ -27,7 +27,7 @@ function taskModule (gulp, browserSync, config) {
                 config.paths.source.components + '**/*',
             ])
             .pipe(copy(dest, {
-                prefix: 3
+                prefix: 2
             }));
     };
 
