@@ -5,7 +5,7 @@ var taskName        = 'CSS: Snippets require';
 var taskDescription = 'Gets snippets from the snippets lib repo.';
 
 // Task dependencies
-var cssSnippets     = require('./../plugins/gulp-css-snippets');
+var cssSnippets     = require('gulp-css-snippets');
 
 // Export the task module
 module.exports = taskModule;
