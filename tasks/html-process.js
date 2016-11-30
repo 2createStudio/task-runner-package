@@ -20,7 +20,7 @@ function taskModule (gulp, browserSync, config) {
     var task = function () {
         var dest = config.paths.dist.html;
         var src = [
-            config.paths.source.html + '**/*.+(html|php)'
+            config.paths.source.html + '*.+(html|php)'
         ];
 
         if (config.building) {
@@ -30,7 +30,7 @@ function taskModule (gulp, browserSync, config) {
         if (config.minifying) {
             dest = config.paths.min.html;
             src = [
-                config.paths.build.html + '**/*.+(html|php)'
+                config.paths.build.html + '*.+(html|php)'
             ];
         }
 
