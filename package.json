@@ -1,6 +1,6 @@
 {
   "name": "2create-task-runner-package",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "2create task runner package",
   "main": "index.js",
   "scripts": {
