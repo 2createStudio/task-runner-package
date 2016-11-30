@@ -4,9 +4,6 @@
 var taskName        = 'JS: Process';
 var taskDescription = 'Compiles the JS.';
 
-// Task dependencies
-var copy            = require('gulp-copy');
-
 // Export the task module
 module.exports = taskModule;
 
@@ -26,9 +23,8 @@ function taskModule (gulp, browserSync, config) {
         return gulp.src([
                 config.paths.source.js + '**/*',
             ])
-            .pipe(copy(dest, {
-                prefix: 3
-            }));
+            .pipe(gulp.dest(dest))
+            .pipe(browserSync.reload({stream: true}));
     };
 
     task.displayName = taskName;

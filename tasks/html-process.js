@@ -41,7 +41,8 @@ function taskModule (gulp, browserSync, config) {
             .pipe(gulpif(config.minifying, htmlmin({collapseWhitespace: true})))
             .pipe(gulpif(config.minifying, inlinesource({compress: true})))
             .pipe(gulpif(config.minifying, strip()))
-            .pipe(gulp.dest(dest));
+            .pipe(gulp.dest(dest))
+            .pipe(browserSync.reload({stream: true}));
     };
 
     task.displayName = taskName;

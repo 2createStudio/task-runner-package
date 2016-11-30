@@ -4,9 +4,6 @@
 var taskName        = 'Fonts: Process';
 var taskDescription = 'Process the fonts into the working directory.';
 
-// Task dependencies
-var copy            = require('gulp-copy');
-
 // Export the task module
 module.exports = taskModule;
 
@@ -27,9 +24,8 @@ function taskModule (gulp, browserSync, config) {
         return gulp.src([
                 config.paths.source.fonts + '**/*'
             ])
-            .pipe(copy(dest, {
-                prefix: 3
-            }));
+            .pipe(gulp.dest(dest))
+            .pipe(browserSync.reload({stream: true}));
     };
 
     task.displayName = taskName;

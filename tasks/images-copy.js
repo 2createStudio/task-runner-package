@@ -4,9 +4,6 @@
 var taskName        = 'Images: Copy';
 var taskDescription = 'Copy the image assets into the working directory.';
 
-// Task dependencies
-var copy            = require('gulp-copy');
-
 // Export the task module
 module.exports = taskModule;
 
@@ -16,9 +13,7 @@ function taskModule (gulp, browserSync, config) {
         return gulp.src([
                 config.paths.source.images + '**/*.+(png|PNG|jpg|JPG|jpeg|JPEG|gif|GIF|svg|SVG|ico|ICO)'
             ])
-            .pipe(copy(config.paths.dist.images, {
-                prefix: 3
-            }));
+            .pipe(gulp.dest(config.paths.dist.images));
     };
 
     task.displayName = taskName;

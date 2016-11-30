@@ -118,17 +118,17 @@ function main(gulp, browserSync, baseConfig) {
         // JS watch
         gulp
             .watch([config.paths.source.js + '*.js'])
-            .on('all', gulp.series(getTask('js-cleanup'), jsProcessTask, browserSync.reload));
+            .on('all', gulp.series(getTask('js-cleanup'), jsProcessTask));
 
         // Components watch
         gulp
             .watch([config.paths.source.components + '**/*'])
-            .on('all', gulp.series(getTask('components-cleanup'), componentsProcessTask, browserSync.reload));
+            .on('all', gulp.series(getTask('components-cleanup'), componentsProcessTask));
 
         // Fonts watch
         gulp
             .watch([config.paths.source.fonts + '**/*'])
-            .on('all', gulp.series(getTask('fonts-cleanup'), fontsProcessTask, browserSync.reload));
+            .on('all', gulp.series(getTask('fonts-cleanup'), fontsProcessTask));
 
         // User Includes watch
         gulp
@@ -142,7 +142,7 @@ function main(gulp, browserSync, baseConfig) {
                 config.paths.source.html + '**/*.shtml',
                 config.paths.source.html + '**/*.php'
             ])
-            .on('all', gulp.series(getTask('html-cleanup'), htmlProcessTask, browserSync.reload));
+            .on('all', gulp.series(getTask('html-cleanup'), htmlProcessTask));
 
         // CSS Snippets require watch
         gulp
