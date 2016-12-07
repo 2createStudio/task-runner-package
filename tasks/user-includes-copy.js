@@ -4,6 +4,9 @@
 var taskName        = 'User Includes: Copy';
 var taskDescription = 'Copies the user include files and directories into the working directory.';
 
+// Task dependencies
+var copy            = require('gulp-copy');
+
 // Export the task module
 module.exports = taskModule;
 
@@ -26,10 +29,12 @@ function taskModule (gulp, browserSync, config) {
             src.push(config.paths.source.dir + config.settings.userIncludes.paths[i]);
         }
 
-        return gulp.src(src, { 
+        return gulp.src(src, {
                 allowEmpty : true
             })
-            .pipe(gulp.dest(dest));
+            .pipe(copy(dest, {
+                prefix: 1
+            }));
     };
 
     task.displayName = taskName;

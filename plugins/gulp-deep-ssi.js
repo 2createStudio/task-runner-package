@@ -17,6 +17,7 @@ module.exports = function (opts) {
     });
 
     return through.obj(function (file, enc, cb) {
+        console.log(file.path);
         var self = this,
             ext = path.extname(file.path).slice(1),
             cfg = {

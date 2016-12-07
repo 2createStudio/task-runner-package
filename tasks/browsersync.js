@@ -65,7 +65,8 @@ function taskModule (gulp, browserSync, config) {
         };
 
         if (config.browserSync.url) {
-            browserSyncConfig.proxy = config.browserSync.url + config.urls.dist.dir;
+            console.log(config.browserSync.url + (config.urls.dist.dir ? config.urls.dist.dir : ''));
+            browserSyncConfig.proxy = config.browserSync.url + (config.urls.dist.dir ? config.urls.dist.dir : '');
         } else {
             browserSyncConfig.server = {
                 baseDir: config.paths.dist.dir,

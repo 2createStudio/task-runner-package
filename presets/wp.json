@@ -1,0 +1,119 @@
+{
+	"browserSync": {
+		"hostname": "localhost",
+		"url": null,
+		"open": "external"
+	},
+	"settings": {
+		"css": {
+			"sourcemap": false,
+			"beautify": false,
+			"minify": true,
+			"autoprefixer": {
+				"browsers": ["last 3 version"]
+			}
+		},
+		"userIncludes": {
+			"paths": []
+		}
+	},
+	"paths": {
+		"source": {
+			"dir"       : "./src/",
+			"html"      : false,
+			"css"       : "./postcss/",
+			"js"        : false,
+			"fonts"     : false,
+			"images"    : false,
+			"sprite"    : "./images/sprite/",
+			"components": false
+		},
+		"dist": {
+			"dir"     	: null,
+			"html"    	: "./dist/",
+			"css"     	: "./assets/",
+			"js"      	: "./dist/js/",
+			"fonts"   	: "./dist/fonts/",
+			"images"  	: "./dist/images/",
+			"sprite"  	: "./images/sprite/",
+			"components": "./dist/components/"
+		},
+		"build": {
+			"dir"       : null,
+			"html"      : "./build/",
+			"css"       : "./assets/",
+			"js"        : "./build/js/",
+			"fonts"     : "./build/fonts/",
+			"images"    : "./build/images/",
+			"sprite"    : "./images/",
+			"components": "./build/components/"
+		},
+		"min": {
+			"dir"     	: null,
+			"html"    	: "./min/",
+			"css"     	: "./assets/",
+			"js"      	: "./min/js/",
+			"fonts"   	: "./min/fonts/",
+			"images"  	: "./min/images/",
+			"sprite"  	: "./images/",
+			"components": "./min/components/"
+		},
+		"qa": {
+			"dir"     	: null,
+			"hvd"     	: "./~QA/html-vs-design/",
+			"hvdImages"	: "./~QA/html-vs-design/images/",
+			"logs"    	: "./~QA/logs/"
+		},
+		"userIncludes": {
+			"dir": false
+		},
+		"snippet": {
+			"dir"       : "./postcss/",
+			"outputDir" : "./postcss/"
+		}
+	},
+	"fileNames": {
+		"source": {
+			"spriteCSS": "_module.sprite.css"
+		},
+		"dist": {
+			"css": "bundle.css"
+		},
+		"build": {
+			"css": "bundle.css",
+			"sprite": "sprite.png"
+		},
+		"min": {
+			"css": "bundle.css",
+			"sprite": "sprite.png"
+		},
+		"qa": {
+			"hvd" : {
+				"settings": "settings.json"
+			},
+			"logs" : {
+				"css" : "csslint.log"
+			}
+		},
+		"userIncludes": {
+			"requires": ".gulp-include"
+		},
+		"snippet": {
+			"requires": "_snippet-requires.css",
+			"components": "_snippet-components.css"
+		}
+	},
+	"urls": {
+		"dist": {
+			"dir"     : null
+		}
+	},
+	"pixelParallel": {
+		"enable": true,
+		"scriptSrc": "http://pp.htmlbox.net/pixelParallel.build.js",
+		"pouchDbSrc": "//cdn.jsdelivr.net/pouchdb/5.2.1/pouchdb.min.js"
+	},
+	"cssSnippets": {
+		"requireUrl": "https://rawgit.com/2createStudio/postcss-require-lib/master/snippets/"
+	}
+}

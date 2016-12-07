@@ -12,6 +12,8 @@ var htmlmin         = require('gulp-htmlmin');
 var inlinesource    = require('gulp-inline-source');
 var strip           = require('gulp-strip-comments');
 var postcssAPI      = require('postcss');
+var filter          = require('gulp-filter');
+
 
 // Export the task module
 module.exports = taskModule;
@@ -36,9 +38,11 @@ function taskModule (gulp, browserSync, config) {
     }];
 
     var task = function () {
+        var htmlFilter = filter(['**/*.html'], {restore: true});
+
         var dest = config.paths.dist.html;
         var src = [
-            config.paths.source.html + '*.+(html|php)'
+            config.paths.source.html + '**/*.+(html|php)'
         ];
 
         if (config.building) {
@@ -48,14 +52,16 @@ function taskModule (gulp, browserSync, config) {
         if (config.minifying) {
             dest = config.paths.min.html;
             src = [
-                config.paths.build.html + '*.+(html|php)'
+                config.paths.build.html + '**/*.+(html|php)'
             ];
         }
 
         return gulp.src(src)
+            .pipe(htmlFilter)
             .pipe(gulpSSI({
                 baseDir: config.paths.source.html
             }))
+            .pipe(htmlFilter.restore)
             .pipe(gulpif(config.minifying, htmlmin({collapseWhitespace: true})))
             .pipe(gulpif(config.minifying, inlinesource({handlers: minifyHandlers})))
             .pipe(gulpif(config.minifying, strip()))
