@@ -13,47 +13,48 @@ module.exports = taskModule;
 
 // Task module
 function taskModule (gulp, browserSync, config) {
+    var watchers = [];
+
     var task = function (cb) {
         var currentPath = process.cwd();
-        fs.readFile(config.paths.userIncludes.dir + config.fileNames.userIncludes.requires, 'utf8', function(err, data) {
-            if (err) throw err;
+        var result = [];
 
-            var userPaths = data.match(/^(.*)$/gm);
-            var result = [];
+        for (var i = 0; i < config.userIncludes.length; i++) {
+            if (path.resolve(config.userIncludes[i]) !== currentPath && path.resolve(config.userIncludes[i]).indexOf(currentPath) > -1) {
 
-            for (var i = 0; i < userPaths.length; i++) {
-                if (path.resolve(userPaths[i]) !== currentPath && path.resolve(userPaths[i]).indexOf(currentPath) > -1) {
-
-                    if (userPaths[i].slice(-1) === '/') {
-                        userPaths[i] += '**/*';
-                    }
-
-                    result.push(userPaths[i]);
+                if (config.userIncludes[i].slice(-1) === '/') {
+                    config.userIncludes[i] += '**/*';
                 }
+
+                result.push(config.userIncludes[i]);
+            }
+        }
+
+        if (config.userIncludesWatcherPaths) {
+            if (!('userIncludesWatcherPaths' in config)) {
+                config.userIncludesWatcherPaths = [];
             }
 
-            if (config.settings.userIncludes.watcher) {
-                if (!('watcherPaths' in config.settings.userIncludes)) {
-                    config.settings.userIncludes.watcherPaths = [];
+            // Configure watch
+            for (var i = 0; i < result.length; i++) {
+                if (config.userIncludesWatcherPaths.indexOf(result[i]) > -1) {
+                    continue;
                 }
 
-                // Configure watch
-                for (var i = 0; i < result.length; i++) {
-                    if (config.settings.userIncludes.watcherPaths.indexOf(result[i]) > -1) {
-                        continue;
-                    }
+                config.userIncludesWatcherPaths.push(result[i]);
+                config.userIncludesWatcher.add(config.paths.source.dir + result[i]);
 
-                    config.settings.userIncludes.watcherPaths.push(result[i]);
-                    config.settings.userIncludes.watcher.add(config.paths.source.dir + result[i]);
-
-                }
             }
+        }
 
-            config.settings.userIncludes.paths = result;
+        config.userIncludesPaths = result;
 
-            cb();
-        });
+        cb();
     };
+
+    function getPaths() {
+        
+    }
 
     task.displayName = taskName;
     task.description = taskDescription;

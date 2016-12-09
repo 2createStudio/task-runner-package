@@ -17,6 +17,10 @@ function helper(config) {
         newConfig.browserSync.open = utils.getEnvVar('dev-open');
     }
 
+    if (utils.getEnvVar('gulpfile') !== null) {
+        newConfig.settings.gulpfile = utils.getEnvVar('gulpfile');
+    }
+
     if (utils.getEnvVar('css-sourcemap')) {
         newConfig.settings.css.sourcemap = true;
     }

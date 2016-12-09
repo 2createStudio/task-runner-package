@@ -1,23 +1,27 @@
 'use strict';
 
-module.exports = main;
+module.exports  = main;
 
-var mergeDeep = require('./helper/merge-deep');
+var mergeDeep   = require('./helper/merge-deep');
+var yargs       = require('yargs');
+var fs          = require('fs');
+var JSON5       = require('JSON5');
 
-function main(gulp, browserSync, baseConfig, presetKey) {
+function main(gulp, browserSync, presetKey) {
     var availableBaseConfigPresets = {
         'wp-preset': './presets/wp.json',
         'html-preset': './presets/html.json'
     };
+
     var presetConfig = {};
 
     if (presetKey && presetKey in availableBaseConfigPresets) {
-        presetConfig = require(availableBaseConfigPresets[presetKey]);        
+        presetConfig = require(availableBaseConfigPresets[presetKey]);
     }
 
-    var config = mergeDeep(presetConfig, baseConfig);
+    var config = {};
 
-    config = require('./helper/args-config')(config);
+    updateConfig();
 
     // Collect multi-used tasks
     var cssProcessTask = getTask('css-process');
@@ -32,6 +36,7 @@ function main(gulp, browserSync, baseConfig, presetKey) {
     var userIncludesCopyTask = getTask('user-includes-copy');
     var fontsProcessTask = getTask('fonts-process');
     var imagesOptimise = getTask('images-optimise');
+    var vendorCSSPackTask = getTask('vendorcss-pack');
 
     // Create serve tasks collection
     var serveTasksArray = [];
@@ -48,6 +53,7 @@ function main(gulp, browserSync, baseConfig, presetKey) {
     if (config.paths.source.components) serveTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) serveTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) serveTasksArray.push(userIncludesCopyTask);
+    if (config.paths.source.vendorCSS) serveTasksArray.push(vendorCSSPackTask);
 
     serveTasksArray.push(getTask('browsersync'));
     serveTasksArray.push(watchTask);
@@ -76,6 +82,7 @@ function main(gulp, browserSync, baseConfig, presetKey) {
     if (config.paths.source.components) minTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) minTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) minTasksArray.push(userIncludesCopyTask);
+    if (config.paths.source.vendorCSS) minTasksArray.push(vendorCSSPackTask);
 
     minTasks = gulp.series.apply( this, minTasksArray );
 
@@ -104,6 +111,7 @@ function main(gulp, browserSync, baseConfig, presetKey) {
     if (config.paths.source.components) buildTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) buildTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) buildTasksArray.push(userIncludesCopyTask);
+    if (config.paths.source.vendorCSS) buildTasksArray.push(vendorCSSPackTask);
 
     buildTasksArray.push(minTasks);
 
@@ -176,11 +184,23 @@ function main(gulp, browserSync, baseConfig, presetKey) {
         }
 
         // User Includes watch
-        if (config.paths.userIncludes.dir) {
-            gulp
-                .watch([config.paths.userIncludes.dir + config.fileNames.userIncludes.requires])
-                .on('change', gulp.series(userIncludesCleanupTask, userIncludesGetTask, userIncludesCopyTask));
-        }
+        var configWatcher = gulp
+            .watch([config.paths.config.dir + config.fileNames.config]);
+
+        // Create config watch tasks collection
+        var configWatchTasksArray = [updateConfig];
+        var configWatchTasks = null;
+
+        if (config.paths.userIncludes.dir) configWatchTasksArray.push(userIncludesCleanupTask);
+        if (config.paths.userIncludes.dir) configWatchTasksArray.push(userIncludesGetTask);
+        if (config.paths.userIncludes.dir) configWatchTasksArray.push(userIncludesCopyTask);
+
+        if (config.paths.source.vendorCSS) configWatchTasksArray.push(vendorCSSPackTask);
+
+        configWatchTasks = gulp.series.apply( this, configWatchTasksArray );
+
+        configWatcher
+            .on('change', configWatchTasks);
 
         // HTML watch
         if (config.paths.source.html) {
@@ -201,11 +221,21 @@ function main(gulp, browserSync, baseConfig, presetKey) {
         }
 
         if (config.paths.userIncludes.dir) {
-            config.settings.userIncludes.watcher = gulp
+            config.userIncludesWatcher = gulp
                 .watch()
                 .on('all', gulp.series(userIncludesCleanupTask, userIncludesCopyTask));
         }
 
-        cb();
+        cb && cb();
+    }
+
+    function getBaseConfig() {
+        return JSON5.parse(fs.readFileSync((yargs.argv.devDir || '.') + '/.2c-gulp-rc'));
+    }
+
+    function updateConfig(cb) {        
+        mergeDeep(config, require('./helper/args-config')(mergeDeep(presetConfig, getBaseConfig())));
+
+        cb && cb();
     }
 }

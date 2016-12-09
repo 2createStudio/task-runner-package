@@ -12,8 +12,14 @@ module.exports = taskModule;
 
 // Task module
 function taskModule (gulp, browserSync, config) {
-    var task = function () {
+    var task = function (cb) {
         var src = [];
+
+        if (!config.userIncludes.paths) {
+            cb();
+
+            return;
+        }
 
         for (var i = 0; i < config.settings.userIncludes.paths.length; i++) {
             src.push(config.paths.dist.dir + config.settings.userIncludes.paths[i].replace(/\*\*\/\*$/, ''));
