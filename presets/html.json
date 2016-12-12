@@ -1,4 +1,6 @@
 {
+    "userIncludes": [],
+    "vendorCSS": [],
     "browserSync": {
         "hostname": "localhost",
         "url": null,
@@ -10,11 +12,8 @@
             "beautify": false,
             "minify": false,
             "autoprefixer": {
-                "browsers": ["last 3 version"]
+                "browsers": ["last 3 versions"]
             }
-        },
-        "userIncludes": {
-            "paths": []
         },
         "webpack": {
             "module": {

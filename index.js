@@ -233,7 +233,7 @@ function main(gulp, browserSync, presetKey) {
         return JSON5.parse(fs.readFileSync((yargs.argv.devDir || '.') + '/.2c-gulp-rc'));
     }
 
-    function updateConfig(cb) {        
+    function updateConfig(cb) {
         mergeDeep(config, require('./helper/args-config')(mergeDeep(presetConfig, getBaseConfig())));
 
         cb && cb();

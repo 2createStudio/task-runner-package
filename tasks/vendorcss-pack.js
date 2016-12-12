@@ -14,7 +14,7 @@ module.exports = taskModule;
 // Task module
 function taskModule (gulp, browserSync, config) {
 
-    var task = function () {
+    var task = function (cb) {
         var dest = config.paths.dist.vendorCSS;
         var fileName = config.fileNames.dist.vendorCSS;
 
@@ -32,6 +32,12 @@ function taskModule (gulp, browserSync, config) {
 
         for (var i = 0; i < config.vendorCSS.length; i++) {
             src.push(config.paths.source.vendorCSS + config.vendorCSS[i]);
+        }
+
+        if (!src.length) {
+            cb();
+
+            return;
         }
 
         return gulp.src(src)
