@@ -166,7 +166,7 @@ function main(gulp, browserSync, presetKey) {
         if (config.paths.source.js) {
             gulp
                 .watch([config.paths.source.js + '*.js'])
-                .on('all', gulp.series(getTask('js-cleanup'), jsProcessTask));
+                .on('all', gulp.series(jsProcessTask));
         }
 
         // Components watch
