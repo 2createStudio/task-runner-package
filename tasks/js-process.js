@@ -53,10 +53,6 @@ function taskModule (gulp, browserSync, config) {
                 item.exclude = new RegExp(item.exclude);
             }
 
-            item.query.presets = item.query.presets.map(function(item) {
-                return require.resolve('babel-preset-es2015');
-            });
-
         });
 
         return gulp.src([

@@ -43,17 +43,17 @@ function main(gulp, browserSync, presetKey) {
     var serveTasks = null;
 
     if (config.paths.dist.dir) serveTasksArray.push(getTask('dist-cleanup'));
-    if (config.paths.source.sprite) serveTasksArray.push(imagesSpriteRetinaResize);
-    if (config.paths.source.sprite) serveTasksArray.push(lazyRulesTask);
-    if (config.paths.source.css) serveTasksArray.push(cssProcessTask);
-    if (config.paths.source.js) serveTasksArray.push(jsProcessTask);
-    if (config.paths.source.html) serveTasksArray.push(htmlProcessTask);
-    if (config.paths.source.images) serveTasksArray.push(imagesCopyTask);
-    if (config.paths.source.fonts) serveTasksArray.push(fontsProcessTask);
-    if (config.paths.source.components) serveTasksArray.push(componentsProcessTask);
+    if (config.paths.dist.sprite) serveTasksArray.push(imagesSpriteRetinaResize);
+    if (config.paths.dist.sprite) serveTasksArray.push(lazyRulesTask);
+    if (config.paths.dist.css) serveTasksArray.push(cssProcessTask);
+    if (config.paths.dist.js) serveTasksArray.push(jsProcessTask);
+    if (config.paths.dist.html) serveTasksArray.push(htmlProcessTask);
+    if (config.paths.dist.images) serveTasksArray.push(imagesCopyTask);
+    if (config.paths.dist.fonts) serveTasksArray.push(fontsProcessTask);
+    if (config.paths.dist.components) serveTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) serveTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) serveTasksArray.push(userIncludesCopyTask);
-    if (config.paths.source.vendorCSS) serveTasksArray.push(vendorCSSPackTask);
+    if (config.paths.dist.vendorCSS) serveTasksArray.push(vendorCSSPackTask);
 
     serveTasksArray.push(getTask('browsersync'));
     serveTasksArray.push(watchTask);
@@ -74,15 +74,15 @@ function main(gulp, browserSync, presetKey) {
     var minTasks = null;
 
     if (config.paths.min.dir) minTasksArray.push(getTask('min-cleanup'));
-    if (config.paths.source.css) minTasksArray.push(cssProcessTask);
-    if (config.paths.source.js) minTasksArray.push(jsProcessTask);
-    if (config.paths.source.html) minTasksArray.push(htmlProcessTask);
-    if (config.paths.source.images) minTasksArray.push(imagesOptimise);
-    if (config.paths.source.fonts) minTasksArray.push(fontsProcessTask);
-    if (config.paths.source.components) minTasksArray.push(componentsProcessTask);
+    if (config.paths.min.css) minTasksArray.push(cssProcessTask);
+    if (config.paths.min.js) minTasksArray.push(jsProcessTask);
+    if (config.paths.min.html) minTasksArray.push(htmlProcessTask);
+    if (config.paths.min.images) minTasksArray.push(imagesOptimise);
+    if (config.paths.min.fonts) minTasksArray.push(fontsProcessTask);
+    if (config.paths.min.components) minTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) minTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) minTasksArray.push(userIncludesCopyTask);
-    if (config.paths.source.vendorCSS) minTasksArray.push(vendorCSSPackTask);
+    if (config.paths.min.vendorCSS) minTasksArray.push(vendorCSSPackTask);
 
     minTasks = gulp.series.apply( this, minTasksArray );
 
@@ -99,19 +99,19 @@ function main(gulp, browserSync, presetKey) {
     var buildTasks = null;
 
     if (config.paths.build.dir) buildTasksArray.push(getTask('build-cleanup'));
-    if (config.paths.source.sprite) buildTasksArray.push(imagesSpriteRetinaResize);
-    if (config.paths.source.sprite) buildTasksArray.push(lazyRulesTask);
-    if (config.paths.source.css) buildTasksArray.push(cssProcessTask);
-    if (config.paths.source.js) buildTasksArray.push(jsProcessTask);
+    if (config.paths.build.sprite) buildTasksArray.push(imagesSpriteRetinaResize);
+    if (config.paths.build.sprite) buildTasksArray.push(lazyRulesTask);
+    if (config.paths.build.css) buildTasksArray.push(cssProcessTask);
+    if (config.paths.build.js) buildTasksArray.push(jsProcessTask);
     if (config.paths.qa.dir) buildTasksArray.push(getTask('css-lint-cleanup'));
     if (config.paths.qa.dir) buildTasksArray.push(getTask('css-lint-save'));
-    if (config.paths.source.html) buildTasksArray.push(htmlProcessTask);
-    if (config.paths.source.images) buildTasksArray.push(imagesOptimise);
-    if (config.paths.source.fonts) buildTasksArray.push(fontsProcessTask);
-    if (config.paths.source.components) buildTasksArray.push(componentsProcessTask);
+    if (config.paths.build.html) buildTasksArray.push(htmlProcessTask);
+    if (config.paths.build.images) buildTasksArray.push(imagesOptimise);
+    if (config.paths.build.fonts) buildTasksArray.push(fontsProcessTask);
+    if (config.paths.build.components) buildTasksArray.push(componentsProcessTask);
     if (config.paths.userIncludes.dir) buildTasksArray.push(userIncludesGetTask);
     if (config.paths.userIncludes.dir) buildTasksArray.push(userIncludesCopyTask);
-    if (config.paths.source.vendorCSS) buildTasksArray.push(vendorCSSPackTask);
+    if (config.paths.build.vendorCSS) buildTasksArray.push(vendorCSSPackTask);
 
     buildTasksArray.push(minTasks);
 
@@ -165,7 +165,7 @@ function main(gulp, browserSync, presetKey) {
         // JS watch
         if (config.paths.source.js) {
             gulp
-                .watch([config.paths.source.js + '*.js'])
+                .watch([config.paths.source.js + '**/*.js'])
                 .on('all', gulp.series(jsProcessTask));
         }
 

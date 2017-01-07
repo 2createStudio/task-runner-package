@@ -20,11 +20,8 @@
                 "loaders": [
                     {
                         "test": "(\\.jsx|\\.js)$",
-                        "loader": "babel",
-                        "exclude": "node_modules",
-                        "query": {
-                            "presets": ["babel-preset-es2015"]
-                        }
+                        "loaders": ["babel?presets[]=es2015"],
+                        "exclude": "node_modules"
                     }
                 ]
             },
