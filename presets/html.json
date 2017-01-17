@@ -15,18 +15,7 @@
                 "browsers": ["last 3 versions"]
             }
         },
-        "webpack": {
-            "module": {
-                "loaders": [
-                    {
-                        "test": "(\\.jsx|\\.js)$",
-                        "loaders": ["babel?presets[]=es2015"],
-                        "exclude": "node_modules"
-                    }
-                ]
-            },
-            "devtool": "#eval-source-map"
-        }
+        "webpack": {}
     },
     "paths": {
         "source": {
@@ -130,11 +119,6 @@
         "dist": {
             "dir"     : "/dist/"
         }
-    },
-    "pixelParallel": {
-        "enable": true,
-        "scriptSrc": "http://pp.htmlbox.net/pixelParallel.build.js",
-        "pouchDbSrc": "//cdn.jsdelivr.net/pouchdb/5.2.1/pouchdb.min.js"
     },
     "cssSnippets": {
         "requireUrl": "https://rawgit.com/2createStudio/postcss-require-lib/master/snippets/"

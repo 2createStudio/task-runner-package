@@ -44,16 +44,17 @@ function taskModule (gulp, browserSync, config) {
             filename = config.fileNames.min.js;
         }
 
-        config.settings.webpack.module.loaders.forEach(function(item) {
-            if (item.test) {
-                item.test = new RegExp(item.test);
-            }
+        if ('module' in config.settings.webpack && 'loaders' in config.settings.webpack.module && config.settings.webpack.module.loaders) {
+            config.settings.webpack.module.loaders.forEach(function(item) {
+                if (item.test) {
+                    item.test = new RegExp(item.test);
+                }
 
-            if (item.exclude) {
-                item.exclude = new RegExp(item.exclude);
-            }
-
-        });
+                if (item.exclude) {
+                    item.exclude = new RegExp(item.exclude);
+                }
+            });
+        }
 
         return gulp.src([
                 config.paths.source.js + 'app.js'

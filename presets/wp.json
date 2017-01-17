@@ -131,11 +131,6 @@
             "dir"     : null
         }
     },
-    "pixelParallel": {
-        "enable": true,
-        "scriptSrc": "http://pp.htmlbox.net/pixelParallel.build.js",
-        "pouchDbSrc": "//cdn.jsdelivr.net/pouchdb/5.2.1/pouchdb.min.js"
-    },
     "cssSnippets": {
         "requireUrl": "https://rawgit.com/2createStudio/postcss-require-lib/master/snippets/"
     }
