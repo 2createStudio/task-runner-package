@@ -7,7 +7,6 @@ var taskDescription = 'Livereload, and notifications.';
 // Task dependencies
 var path            = require('path');
 var utils           = require('./../helper/utils');
-var connectPixelParallel = require('./../helper/connect-pixelparallel.js');
 
 // Export the task module
 module.exports = taskModule;
@@ -52,20 +51,13 @@ function taskModule (gulp, browserSync, config) {
                 rule: {
                     match: /<\/body>/i,
                     fn: function (snippet, match) {
-                        if (config.pixelParallel.enable) {
-                            return snippet + match
-                                + '<script src="' + config.pixelParallel.pouchDbSrc + '"></script>'
-                                + '<script src="' + config.pixelParallel.scriptSrc + '"></script>';
-                        } else {
-                            return snippet + match;
-                        }
+                        return snippet + match;
                     }
                 }
             }
         };
 
         if (config.browserSync.url) {
-            console.log(config.browserSync.url + (config.urls.dist.dir ? config.urls.dist.dir : ''));
             browserSyncConfig.proxy = config.browserSync.url + (config.urls.dist.dir ? config.urls.dist.dir : '');
         } else {
             browserSyncConfig.server = {
@@ -74,7 +66,7 @@ function taskModule (gulp, browserSync, config) {
             };
         }
 
-        browserSync.init(browserSyncConfig, config.pixelParallel.enable ? connectPixelParallel && cb : cb);
+        browserSync.init(browserSyncConfig, cb);
 
     };
 
