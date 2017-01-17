@@ -5,7 +5,7 @@ module.exports  = main;
 var mergeDeep   = require('./helper/merge-deep');
 var yargs       = require('yargs');
 var fs          = require('fs');
-var JSON5       = require('JSON5');
+var JSON5       = require('json5');
 
 function main(gulp, browserSync, presetKey) {
     var availableBaseConfigPresets = {
